@@ -1,20 +1,18 @@
 import ArticleCard from "./ArticleCard"
-import axios from 'axios'
+import fetchApi from "./fetchApi";
+import Loader from "./Loader";
 import { useEffect, useState } from "react";
 
-export default function ArticleList() {
+export default function ArticleList({showArticle, isLoading, setIsLoading}) {
     const [articles, setArticles] = useState([])
-
-    const articleApi = axios.create({
-        baseURL: 'https://newsapp-7o7y.onrender.com'
-      });
-      
+    
       useEffect(() => {
         const fetchArticles = async () => {
+            setIsLoading(true)
             try {
-                const response = await articleApi.get('/api/articles')
+                const response = await fetchApi().get('/api/articles')
                 setArticles(response.data.articles)
-                console.log(response.data.articles)
+                setIsLoading(false)
             } catch(err){
                 
             }
@@ -22,20 +20,25 @@ export default function ArticleList() {
         fetchArticles()
       }, [])
 
+
+      
+
   return (
-    <>
+    <> 
+        
         <section  id='home-articles' className='py-2'>
             <div className='container'>
+                {isLoading ? <Loader /> :
                 <div className='articles-container'>
                     {articles.map((article) => (
-                        <ArticleCard article={article} key={article.id}/>
+                        <ArticleCard key={article.id} article={article} showArticle={showArticle}/>
                     ))}
                 
                 </div>  
+}               
             </div>
-            
         </section>
-    
+        
     </>
     
   )
