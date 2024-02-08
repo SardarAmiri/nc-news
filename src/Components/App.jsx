@@ -6,11 +6,8 @@ import ArticleList from './ArticleList'
 import Article from './Article'
 import { useState } from 'react'
 function App() {
-  const [selectedId, setSelectedId] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  function showArticle(id){
-    setSelectedId(id)
-  }
+ 
 
   return (
     <>
@@ -19,25 +16,19 @@ function App() {
       </nav>
     
       <Routes>
-        <Route path='/' element={
+        <Route exact path='/' element={
         <ArticleList 
-        showArticle={showArticle} 
         isLoading={isLoading} 
         setIsLoading={setIsLoading}
         />} />
-        <Route path='/article' element ={
-        <Article selectedId={selectedId}
+        <Route path='/Article/:id' element ={
+        <Article 
          isLoading={isLoading} 
          setIsLoading={setIsLoading}
          />} />
       </Routes>
     
       <Footer />
-      {/* <section id='home-articles' className='py-2'>
-        <div className='container'>
-        < ArticleList />
-        </div>
-      </section> */}
     </>
   )
 }
