@@ -1,6 +1,6 @@
 
 import {Link} from 'react-router-dom'
-import { PiHandsClappingThin } from "react-icons/pi";
+import { SlLike } from "react-icons/sl";
 import { TfiComments } from "react-icons/tfi";
 
 export default function ArticleCard({article}) {
@@ -18,7 +18,7 @@ export default function ArticleCard({article}) {
           <Link to='/Article/:article_id' >{article.title}</Link>
           </h3>
           <Link to={`/Article/${article.article_id}`} className='btn'>Read More</Link>
-          <div><PiHandsClappingThin className='clap'/>{article.votes}</div>
+          <div><SlLike className='clap'/>{article.votes}</div>
           <div><TfiComments className='comments'/>{article.comment_count}</div>
       </article>
       
