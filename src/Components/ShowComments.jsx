@@ -3,12 +3,12 @@ import fetchApi from "./fetchApi"
 import { useParams } from "react-router-dom"
 import CommentsCard from "./CommentsCard"
 import CommentLoader from "./CommentLoader"
+import CommentsAdder from "./CommentsAdder"
 
 
 function ShowComments() {
  
   const [comments, setComments] = useState([])
-  const [addComment, setAddComment] = useState('')
   const [commentLoading, setCommentLoading] = useState(false)
   const {id} = useParams()
   useEffect(() => {
@@ -26,6 +26,17 @@ function ShowComments() {
     fetchCommentsById()
     
   }, [])
+
+  function deleteComment(id){
+    
+      fetchApi().delete(`/api/comments/${id}`).then(() => {
+        setComments((currentComments) => {
+          return currentComments.filter((comment) => comment.comment_id !== id)
+        })
+      })
+      
+ 
+  }
   
   return (
 
@@ -37,18 +48,10 @@ function ShowComments() {
                   <h3>{comments.length} Comments</h3>
                   <span>Sort by</span>
                 </div>
-                <form id="comment-form">
-                  <label htmlFor="input"></label>
-                  <input type="text" 
-                  placeholder="Add a comments..."
-                  id="input"
-                  value={addComment}
-                  onChange={(e)=> setAddComment(e.target.value)}
-                  />
-                </form>
+                {<CommentsAdder id={id} setComments={setComments}/>}
                 {comments.map((comment) => (
-                  <CommentsCard comment={comment} key ={comment.comment_id
-                  }/>
+                  <CommentsCard deleteComment ={deleteComment} comment={comment} key ={comment.comment_id
+                  } commentLoading={commentLoading} setCommentLoading ={setCommentLoading}/>
                 ))}
             </div>
 }
