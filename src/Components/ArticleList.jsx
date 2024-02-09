@@ -11,7 +11,6 @@ export default function ArticleList({showArticle, isLoading, setIsLoading}) {
             setIsLoading(true)
             try {
                 const response = await fetchApi().get('/api/articles')
-                console.log(response.data.articles)
                 setArticles(response.data.articles)
                 setIsLoading(false)
             } catch(err){
@@ -31,6 +30,7 @@ export default function ArticleList({showArticle, isLoading, setIsLoading}) {
             <div className='container'>
                 {isLoading ? <Loader /> :
                 <div className='articles-container'>
+                    
                     {articles.map((article) => (
                         <ArticleCard key={article.article_id} article={article} showArticle={showArticle}/>
                     ))}
