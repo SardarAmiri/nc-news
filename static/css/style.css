@@ -1,1 +1,35 @@
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
 
+.navbar-brand {
+  font-size: 24px;
+}
+.emoji {
+  font-size: 20px;
+}
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand,
+.navbar-custom .dropdown-item {
+  padding: 1rem;
+}
+.active > .nav-link {
+  color: black;
+  font-weight: bold;
+}
+.breadcrumb-container {
+  background-color: #f1f4f6; /* Light grey background */
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.card-img-top {
+  border-top-left-radius: var(--bs-card-inner-border-radius);
+  border-top-right-radius: var(--bs-card-inner-border-radius);
+  width: 100%;
+}
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
