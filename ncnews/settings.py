@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages.apps.PagesConfig',
     'articles.apps.ArticlesConfig',
+    'topics.apps.TopicsConfig',
+    'comments.apps.CommentsConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -80,6 +83,15 @@ WSGI_APPLICATION = 'ncnews.wsgi.application'
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+# This is a list of the trusted origins for requests. As shown, 
+# you need to add both your local development server URL domain and 
+# your production server URL domain to allow you to add blog post content from the admin dashboard. 
+# The subdomain is wildcarded with a *.
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.codeinstitute-ide.net/",
+    "https://*.herokuapp.com"
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -127,3 +139,4 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
