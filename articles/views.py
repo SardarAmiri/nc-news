@@ -6,7 +6,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 # Create your views here.
 def index(request):
     articles = Article.objects.annotate(comment_count=Count('comments')).order_by('-created_at')
-    paginator = Paginator(articles, 6)
+    paginator = Paginator(articles, 3)
     page_number = request.GET.get('page')
     page_list = paginator.get_page(page_number) 
     context = {
