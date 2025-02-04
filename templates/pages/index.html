@@ -9,7 +9,7 @@
       </div>
     </div>
   </div>
-  <div class="container">
+  <!-- <div class="container">
     <article>
       <div class="card border-light-subtle">
         <div class="row g-0">
@@ -91,6 +91,83 @@
         </div>
       </div>
     </article>
+  </div> -->
+
+  <div class="container">
+    <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+      <!-- Carousel Indicators -->
+      <div class="carousel-indicators">
+        {% for article in articles|slice:":3" %}
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        {% for article in articles|slice:":3" %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <article>
+            <div class="card border-light-subtle">
+              <div class="row g-0">
+                <div class="col-12 col-md-6 order-1 order-md-0 d-flex align-items-center p-4">
+                  <div class="card-body p-md-4 p-xl-6 p-xxl-9">
+                    <div class="entry-header mb-3">
+                      <ul class="entry-meta list-unstyled d-flex mb-4">
+                        <li>
+                          <a class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7" href="#!">{{ article.topic }}</a>
+                        </li>
+                      </ul>
+                      <h2 class="card-title entry-title display-3 fw-bold mb-4 lh-1">
+                        <a class="link-dark text-decoration-none" href="{% url 'article' article.id %}">{{ article.title }}</a>
+                      </h2>
+                    </div>
+                    
+                    <div class="entry-footer">
+                      <ul class="entry-meta list-unstyled d-flex align-items-center m-0">
+                        <li>
+                          <a class="fs-7 link-secondary text-decoration-none d-flex align-items-center" href="#!">
+                            <i class="fa-regular fa-calendar"></i>
+                            <span class="ms-2 fs-7">{{ article.created_at|date:"d M, Y" }}</span>
+                          </a>
+                        </li>
+                        <li>
+                          <span class="px-3">&bull;</span>
+                        </li>
+                        <li>
+                          <a class="link-secondary text-decoration-none d-flex align-items-center" href="#!">
+                            <i class="fa-regular fa-comment-dots"></i>
+                            <span class="ms-2 fs-7">{{ article.comment_count }}</span>
+                          </a>
+                        </li>
+                        <li>
+                          <span class="px-3">&bull;</span>
+                        </li>
+                        <li>
+                          <a class="link-secondary text-decoration-none d-flex align-items-center" href="#!">
+                            <i class="fa-regular fa-thumbs-up"></i>
+                            <span class="ms-2 fs-7">{{ article.votes }}</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 d-flex">
+                  <img class="carousel-img img-fluid rounded-end object-fit-cover w-100" loading="lazy" src="{{ article.article_img.url }}" alt="{{ article.topic }}" />
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
   </div>
 </section>
 <main id="main">
@@ -104,225 +181,94 @@
     </div>
     <div class="container overflow-hidden">
       <div class="row gy-4 gy-md-5 gx-xl-6 gy-xl-6 gx-xxl-9 gy-xxl-9">
-        <!-- First Column -->
-        <div class="col-12 col-lg-4">
-          <article>
-            <div class="card border-1 bg-transparent p-4">
-              <figure
-                class="card-img-top mb-4 overflow-hidden bsb-overlay-hover"
-              >
-                <a href="#!">
-                  <img
-                    class="img-fluid bsb-scale bsb-hover-scale-up"
-                    loading="lazy"
-                    src="{% static 'img/blog/blog-img-1.jpg' %}"
-                    alt="Living"
-                  />
-                </a>
-              </figure>
-              <div class="card-body m-0 p-0">
-                <div class="entry-header mb-3">
-                  <ul class="entry-meta list-unstyled d-flex mb-3">
-                    <li>
-                      <a
-                        class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7"
-                        href="#!"
-                        >Topic</a
-                      >
-                    </li>
-                  </ul>
-                  <h2 class="card-title entry-title h4 m-0">
-                    <a class="link-dark text-decoration-none" href="#!"
-                      >Title of Article</a
+        {% if articles %} 
+          {% for article in articles %}
+            <div class="col-12 col-lg-4">
+                <article>
+                  <div class="card border-1 bg-transparent p-4">
+                    <figure
+                      class="card-img-top mb-4 overflow-hidden bsb-overlay-hover"
                     >
-                  </h2>
-                </div>
-              </div>
-              <div class="card-footer border-0 bg-transparent p-0 m-0">
-                <ul
-                  class="entry-meta list-unstyled d-flex align-items-center m-0"
-                >
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-calendar"></i>
-                    <span class="ms-2 fs-7">19 Apr 2010</span>
-                  </li>
-                  <li>
-                    <span class="px-3">&bull;</span>
-                  </li>
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-comment-dots"></i>
-                    <span class="ms-2 fs-7">12</span>
-                  </li>
-                  <li>
-                    <span class="px-3">&bull;</span>
-                  </li>
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-thumbs-up"></i>
-                    <span class="ms-2 fs-7">23</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </article>
-        </div>
-        <!-- Second Column -->
-        <div class="col-12 col-lg-4">
-          <article>
-            <div class="card border-1 bg-transparent p-4">
-              <figure
-                class="card-img-top mb-4 overflow-hidden bsb-overlay-hover"
-              >
-                <a href="#!">
-                  <img
-                    class="img-fluid bsb-scale bsb-hover-scale-up"
-                    loading="lazy"
-                    src="{% static 'img/blog/blog-img-2.jpg' %}"
-                    alt="Living"
-                  />
-                </a>
-              </figure>
-              <div class="card-body m-0 p-0">
-                <div class="entry-header mb-3">
-                  <ul class="entry-meta list-unstyled d-flex mb-3">
-                    <li>
-                      <a
-                        class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7"
-                        href="#!"
-                        >Topic</a
+                      <a href="{% url 'article' article.id %}">
+                        <img
+                          class="latest-img img-fluid bsb-scale bsb-hover-scale-up"
+                          loading="lazy"
+                          src="{{ article.article_img.url}}"
+                          alt="{{ article.topic }}"
+                        />
+                      </a>
+                    </figure>
+                    <div class="card-body m-0 p-0">
+                      <div class="entry-header mb-3">
+                        <ul class="entry-meta list-unstyled d-flex mb-3">
+                          <li>
+                            <a
+                              class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7"
+                              href="#!"
+                              >{{ article.topic }}</a
+                            >
+                          </li>
+                        </ul>
+                        <h2 class="card-title entry-title h4 m-0">
+                          <a class="link-dark text-decoration-none" href="{% url 'article' article.id %}"
+                            >{{ article.title}}</a
+                          >
+                        </h2>
+                      </div>
+                    </div>
+                    <div class="card-footer border-0 bg-transparent p-0 m-0">
+                      <ul
+                        class="entry-meta list-unstyled d-flex align-items-center m-0"
                       >
-                    </li>
-                  </ul>
-                  <h2 class="card-title entry-title h4 m-0">
-                    <a class="link-dark text-decoration-none" href="#!"
-                      >Ttitle of Article</a
-                    >
-                  </h2>
-                </div>
-              </div>
-              <div class="card-footer border-0 bg-transparent p-0 m-0">
-                <ul
-                  class="entry-meta list-unstyled d-flex align-items-center m-0"
-                >
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-calendar"></i>
-                    <span class="ms-2 fs-7">5 March 2018</span>
-                  </li>
-                  <li>
-                    <span class="px-3">&bull;</span>
-                  </li>
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-comment-dots"></i>
-                    <span class="ms-2 fs-7">4</span>
-                  </li>
-                  <li>
-                    <span class="px-3">&bull;</span>
-                  </li>
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-thumbs-up"></i>
-                    <span class="ms-2 fs-7">7</span>
-                  </li>
-                </ul>
-              </div>
+                        <li>
+                          <a
+                            class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
+                            href="#"
+                          ></a>
+                          <i class="fa-regular fa-calendar"></i>
+                          <span class="ms-2 fs-7">{{ article.created_at|date:"d M, Y" }}</span>
+                        </li>
+                        <li>
+                          <span class="px-3">&bull;</span>
+                        </li>
+                        <li>
+                          <a
+                            class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
+                            href="#"
+                          ></a>
+                          <i class="fa-regular fa-comment-dots"></i>
+                          <span class="ms-2 fs-7">{{ article.comment_count}}</span>
+                        </li>
+                        <li>
+                          <span class="px-3">&bull;</span>
+                        </li>
+                        <li>
+                          <a
+                            class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
+                            href="#"
+                          ></a>
+                          <i class="fa-regular fa-thumbs-up"></i>
+                          <span class="ms-2 fs-7">{{ article.votes}}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </article>
             </div>
-          </article>
-        </div>
-        <!-- Third Column -->
-        <div class="col-12 col-lg-4">
-          <article>
-            <div class="card border-1 bg-transparent p-4">
-              <figure
-                class="card-img-top mb-4 overflow-hidden bsb-overlay-hover"
-              >
-                <a href="#!">
-                  <img
-                    class="img-fluid bsb-scale bsb-hover-scale-up"
-                    loading="lazy"
-                    src="{% static 'img/blog/blog-img-3.jpg' %}"
-                    alt="Living"
-                  />
-                </a>
-              </figure>
-              <div class="card-body m-0 p-0">
-                <div class="entry-header mb-3">
-                  <ul class="entry-meta list-unstyled d-flex mb-3">
-                    <li>
-                      <a
-                        class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7"
-                        href="#!"
-                        >Topic</a
-                      >
-                    </li>
-                  </ul>
-                  <h2 class="card-title entry-title h4 m-0">
-                    <a class="link-dark text-decoration-none" href="#!"
-                      >Title of Article</a
-                    >
-                  </h2>
-                </div>
-              </div>
-              <div class="card-footer border-0 bg-transparent p-0 m-0">
-                <ul
-                  class="entry-meta list-unstyled d-flex align-items-center m-0"
-                >
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-calendar"></i>
-                    <span class="ms-2 fs-7">13 Apr 2020</span>
-                  </li>
-                  <li>
-                    <span class="px-3">&bull;</span>
-                  </li>
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-comment-dots"></i>
-                    <span class="ms-2 fs-7">12</span>
-                  </li>
-                  <li>
-                    <span class="px-3">&bull;</span>
-                  </li>
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#"
-                    ></a>
-                    <i class="fa-regular fa-thumbs-up"></i>
-                    <span class="ms-2 fs-7">10</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </article>
-        </div>
+          {% endfor %}
+        {% else %} 
+        <div class="col-12">
+          <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">No Articles Found</h4>
+            <p>
+              There are no articles available at the moment. Please check back
+              later.
+            </p>
+          </div>
+
+        {% endif %}
+       
+      </div>
       </div>
     </div>
     <!-- View All Articles -->
@@ -330,7 +276,7 @@
       <div class="row">
         <div class="col text-center">
           <a
-            href="#!"
+            href="{% url 'articles' %}"
             class="btn bsb-btn-2xl btn-primary rounded-pill mt-5 mt-xl-10"
             >All Articles</a
           >

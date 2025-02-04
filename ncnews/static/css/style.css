@@ -33,3 +33,23 @@
   max-width: 100%;
   height: auto;
 }
+/* Change the background color of the carousel indicators */
+.carousel-indicators [data-bs-target] {
+  background-color: black; /* Change this to your desired color */
+}
+
+/* Change the background color of the active carousel indicator */
+.carousel-indicators .active {
+  background-color: #fff; /* Change this to your desired color */
+}
+
+.latest-img {
+  width: 366px;
+  height: 215px;
+  object-fit: cover;
+}
+.carousel-img {
+  width: 647px;
+  height: 430px;
+  object-fit: cover;
+}

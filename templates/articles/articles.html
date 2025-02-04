@@ -36,7 +36,7 @@
                     >
                       <a href="{% url 'article' article.id %}">
                         <img
-                          class="img-fluid bsb-scale bsb-hover-scale-up"
+                          class="latest-img img-fluid bsb-scale bsb-hover-scale-up"
                           loading="lazy"
                           src="{{ article.article_img.url}}"
                           alt="{{ article.topic }}"
@@ -152,7 +152,7 @@
           {% endif %}
         </div>
       </div>
-    </div>
+      </div>
   </section>
 </main>
 {% endblock %}
