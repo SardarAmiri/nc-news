@@ -10,5 +10,5 @@ def index(request):
     }
     return render(request, 'articles/articles.html', context)
 
-def article(request):
+def article(request, article_id):
     return render(request, 'articles/article.html')
