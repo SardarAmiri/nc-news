@@ -1,1 +1,93 @@
-<h1>Article</h1>
+{% extends 'base.html' %}  {% load static %}
+
+{% block content %} 
+
+<div class="container mt-5">
+    <!--Section: Newsfeed-->
+<section>
+  <article class="row d-flex justify-content-center">
+    <header id="header" class="mb-4">
+        <!-- Post title-->
+        <h1 class="fw-bolder mb-1">{{article.title}}</h1>
+        <!-- Post meta content-->
+        <div class="text-muted fst-italic mb-2">Posted on {{ article.created_at|date:"d M, Y" }} by {{article.author}}</div>
+        <!-- Post categories-->
+        <a class="badge bg-secondary text-decoration-none link-light">{{article.topic}}</a>
+    </header>
+    <div id="card" class="card" >
+        <div class="card-body">
+        <!-- Description -->
+        <div>
+            <p>
+            {{article.body}}
+            </p>
+        </div>
+        </div>
+        <!-- Media -->
+        <div class="bg-image hover-overlay ripple rounded-0" >
+        <img src="{{ article.article_img.url}}" class="w-100" />
+        </div>
+        <div class="card-body">
+        <!-- Reactions -->
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+            
+                <i class="fas fa-heart text-danger"></i>
+                <span>{{article.votes}}</span>
+            
+            </div>
+            <div>
+                <span class="text-muted">{{ article.comment_count}} comments</span>
+            </div>
+        </div>
+        <!-- Reactions -->
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
+            <div>
+                <button  type="button"  class="btn btn-link btn-lg">
+                    <i class="fas fa-thumbs-up me-2"></i>
+                </button>
+                <button  type="button" class="btn btn-link btn-lg">
+                    <i class="fas fa-thumbs-down me-2"></i>
+                </button>
+            </div>
+            <button  type="button"  class="btn btn-lg" >
+            <i class="fa-regular fa-comment-dots"></i> Comments
+            </button>
+        </div>
+        
+        <!-- Input -->
+        <div class="d-flex mb-3">
+            
+            <div data-mdb-input-init class="form-outline w-100">
+            <textarea class="form-control" id="textAreaExample" rows="2"></textarea>
+            <label class="form-label" for="textAreaExample">Write a comment</label>
+            </div>
+        </div>
+        <!-- Single answer -->
+        <div class="d-flex mb-3">
+            <div>
+            <div class="bg-body-tertiary rounded-3 px-3 py-1">
+                <p class="text-dark mb-0">
+                <strong>Malcolm Dosh</strong>
+                </p>
+                <p class="text-muted d-block">
+                <small>Lorem ipsum dolor sit amet consectetur,
+                    adipisicing elit. Natus, aspernatur!</small>
+                </p>
+            </div>
+            <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>
+            <a href="" class="text-muted small me-2"><strong>Delete</strong></a>
+            </div>
+        </div>
+        </div>
+        <!-- Interactions -->
+  </div>
+  </article>
+</section>
+<!--Section: Newsfeed-->
+</div>
+
+{% endblock %}
+

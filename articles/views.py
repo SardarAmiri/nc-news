@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404 ,render
 from django.db.models import Count
 from .models import Article 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -15,4 +15,8 @@ def index(request):
     return render(request, 'articles/articles.html', context)
 
 def article(request, article_id):
-    return render(request, 'articles/article.html')
+    article = get_object_or_404(Article.objects.annotate(comment_count=Count('comments')), pk=article_id)
+    context = {
+        'article': article,
+    }
+    return render(request, 'articles/article.html', context)
