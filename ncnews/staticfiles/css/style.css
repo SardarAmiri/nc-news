@@ -52,4 +52,8 @@
   width: 647px;
   height: 430px;
   object-fit: cover;
+} 
+/* Single Article Style */
+#header, #card {
+  max-width: 52rem;
 }
