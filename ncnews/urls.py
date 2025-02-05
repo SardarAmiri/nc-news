@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('pages.urls'), name='index'),  
     path('articles/', include('articles.urls'), name='articles'),
+    path('comments/', include('comments.urls')),
     path('admin/', admin.site.urls),
 ] 
 if settings.DEBUG:

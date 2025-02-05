@@ -54,6 +54,10 @@
   object-fit: cover;
 } 
 /* Single Article Style */
-#header, #card {
+#header, #card, #breadcrumb {
   max-width: 52rem;
+}
+#breadcrumb {
+  margin-bottom: 1rem;
+
 }
