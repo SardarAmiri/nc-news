@@ -61,3 +61,6 @@
   margin-bottom: 1rem;
 
 }
+#comment-section {
+  display: 'none';
+}
