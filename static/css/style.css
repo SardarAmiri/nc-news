@@ -52,4 +52,12 @@
   width: 647px;
   height: 430px;
   object-fit: cover;
+} 
+/* Single Article Style */
+#header, #card, #breadcrumb {
+  max-width: 52rem;
+}
+#breadcrumb {
+  margin-bottom: 1rem;
+
 }
