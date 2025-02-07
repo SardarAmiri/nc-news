@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('delete/<int:comment_id>/', views.delete_comment, name='delete_comment'),
-    path('vote/<int:comment_id>/<str:vote_type>/', views.vote_comment, name='vote_comment'),
-]
+    path('article/<int:article_id>/add-comment/', views.add_comment, name='add-comment'),
+    path('<int:comment_id>/delete/', views.delete_comment, name='delete-comment'),
+    path('<int:comment_id>/vote/', views.vote_comment, name='vote-comment'),
+] 
