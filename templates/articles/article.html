@@ -82,16 +82,11 @@
         
         <!-- Input -->
         <div class="d-flex mb-3">
-            
-            <!-- <div data-mdb-input-init class="form-outline w-100">
-                <textarea class="form-control" id="textAreaExample" rows="2"></textarea>
-                <label class="form-label" for="textAreaExample">Write a comment</label>
-            </div> -->
-            <form method="POST" action="{% url 'article' article.id %}" class="form-outline w-100">
+            <form id="comment-form" method="POST" action="{% url 'add-comment' article.id %}" class="form-outline w-100">
             {% csrf_token %}
                 <div class="d-flex mb-1">
                     <div class="form-outline w-100">
-                        <textarea class="form-control" name="body" rows="2" required></textarea>
+                        <textarea id="comment-body"  class="form-control" name="body" rows="2" required></textarea>
                         <label class="form-label">Write a comment</label>
                     </div>
                 </div>
@@ -100,48 +95,32 @@
                 </div>
             </form>
         </div>
-         
-        
-        <div  class="d-flex mb-3">
-            <div id="comment-section" style="display: none;">
-                {% for comment in article.comments.all %}
-                <div class="bg-body-tertiary rounded-3 px-3 py-1">
-                    <p class="text-dark mb-0">
+        <div id="comment-section" style="display: none;">
+            {% for comment in article.comments.all %}
+            <div class="bg-body-tertiary rounded-3 px-3 py-1 mb-2" data-comment-id="{{ comment.id }}">
+                <p class="text-dark mb-0">
                     <strong>{{ comment.author.username }}</strong>
                     <span class="text-muted small ms-2">{{ comment.created_at|date:"d M, Y"  }}</span>
-                    </p>
-                    <p class="text-muted d-block">
+                </p>
+                <p class="text-muted d-block">
                     <small>{{ comment.body }}</small>
-                    </p>
-                </div>
+                </p>
                 <div class="d-flex align-items-center">
-                    <!-- Vote Forms -->
-                    <form method="POST" action="{% url 'vote_comment' comment.id 'up' %}" class="me-1">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link btn-sm p-0">
-                            <i class="fas fa-thumbs-up"></i>
-                        </button>
-                    </form>
-                    <span class="mx-1">{{ comment.votes }}</span>
-                    <form method="POST" action="{% url 'vote_comment' comment.id 'down' %}" class="me-2">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link btn-sm p-0">
-                            <i class="fas fa-thumbs-down"></i>
-                        </button>
-                    </form>
-                    <!-- Delete Button (only for comment author) -->
+                    <button class="btn-vote btn btn-link btn-sm p-0" data-vote-type="up" data-id="{{ comment.id }}">
+                        <i class="fas fa-thumbs-up"></i>
+                    </button>
+                    <span class="mx-1" id="comment-votes-{{ comment.id }}">{{ comment.votes }}</span>
+                    <button class="btn-vote btn btn-link btn-sm p-0" data-vote-type="down" data-id="{{ comment.id }}">
+                        <i class="fas fa-thumbs-down"></i>
+                    </button>
                     {% if comment.author == request.user %}
-                    <form method="POST" action="{% url 'delete_comment' comment.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link btn-sm text-danger p-0">Delete</button>
-                    </form>
+                    <button class="btn-delete-comment btn btn-sm text-danger p-0 ms-2" data-id="{{ comment.id }}">Delete</button>
                     {% endif %}
                 </div>
-                {% endfor %}
             </div>
-            
+            {% endfor %}
         </div>
-        
+         
   </div>
   </article>
 </section>
