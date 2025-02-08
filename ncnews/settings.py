@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'articles.apps.ArticlesConfig',
     'topics.apps.TopicsConfig',
     'comments.apps.CommentsConfig',
+    'accounts.apps.AccountsConfig',
     
 ]
 
