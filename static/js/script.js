@@ -1,4 +1,27 @@
 
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("Script loaded");
+    document
+      .getElementById("sortSelect")
+      .addEventListener("change", function () {
+        // console.log("Sort select not changed");
+        // const selectedValue = this.value;
+        // console.log("Selected value:", selectedValue);
+        
+
+        // Get base URL from data attribute
+        const baseUrl = this.dataset.baseUrl;
+        const urlParams = new URLSearchParams(window.location.search);
+        // Update parameters
+        urlParams.set("sort", this.value);
+        urlParams.delete("page"); // Reset to first page
+
+        // Redirect with new parameters
+        window.location.href = `${baseUrl}?${urlParams.toString()}`;
+      });
+    
+  });
   document
     .getElementById("show-comments")
     .addEventListener("click", function () {
@@ -151,7 +174,5 @@
   });
 
 
-
-
-
+  
 

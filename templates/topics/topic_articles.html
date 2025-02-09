@@ -15,8 +15,13 @@
             Home</a
           >
         </li>
-        <li class="breadcrumb-item active" aria-current="page">
-          Browse Articles
+        <li class="breadcrumb-item" >
+          Sort by
+          <select id="sortSelect" class="border-1 bg-transparent text-accent-emphasis ms-2" data-base-url="{% if topic %}{% url 'topic' topic.slug %}{% else %}{% url 'articles' %}{% endif %}">
+            <option value="date" {% if current_sort == 'date' %}selected{% endif %}>Date</option>
+            <option value="comments" {% if current_sort == 'comments' %}selected{% endif %}>Comments</option>
+            <option value="votes" {% if current_sort == 'votes' %}selected{% endif %}>Votes</option>
+         </select>
         </li>
       </ol>
     </nav>
