@@ -26,6 +26,7 @@ urlpatterns = [
     path('articles/', include('articles.urls'), name='articles'),
     path('comments/', include('comments.urls'), name='comments'),
     path('accounts/', include('accounts.urls'), name='accounts'),
+    path('topics/', include('topics.urls'), name='topics'),
     path('admin/', admin.site.urls),
     path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
 ] 

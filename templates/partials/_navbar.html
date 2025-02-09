@@ -39,8 +39,13 @@
             >Topics</a
           >
           <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-            <li><a class="dropdown-item" href="#">Option 1</a></li>
-            <li><a class="dropdown-item" href="#">Option 2</a></li>
+            {% for topic in topics %}
+              <li>
+                <a class="dropdown-item" href="{% url 'topic' topic.slug %}"
+                  >{{topic.slug}}</a
+                >
+              </li>
+            {% endfor %}
           </ul>
         </li>
       </ul>
