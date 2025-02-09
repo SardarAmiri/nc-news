@@ -4,98 +4,11 @@
   <!-- Hero Section -->
   <div class="container">
     <div class="row justify-content-md-center">
-      <div class="col-6">
+      <div class="col-12">
         <h2 class="h4 mb-4 mb-md-5">Featured</h2>
-      </div>
-      <div class="col-6">
-        <!-- Alert -->
-        {% include 'partials/_alert.html' %}
       </div>
     </div>
   </div>
-  <!-- <div class="container">
-    <article>
-      <div class="card border-light-subtle">
-        <div class="row g-0">
-          <div
-            class="col-12 col-md-6 order-1 order-md-0 d-flex align-items-center p-4"
-          >
-            <div class="card-body p-md-4 p-xl-6 p-xxl-9">
-              <div class="entry-header mb-3">
-                <ul class="entry-meta list-unstyled d-flex mb-4">
-                  <li>
-                    <a
-                      class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7"
-                      href="#!"
-                      >Coding</a
-                    >
-                  </li>
-                </ul>
-                <h2 class="card-title entry-title display-3 fw-bold mb-4 lh-1">
-                  <a class="link-dark text-decoration-none" href="#!"
-                    >Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </a>
-                </h2>
-              </div>
-              <p class="card-text entry-summary text-secondary mb-4">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Aliquid voluptatibus, est dignissimos suscipit commodi quod
-                provident repudiandae odit illo optio iusto quam aperiam
-                explicabo?
-              </p>
-              <div class="entry-footer">
-                <ul
-                  class="entry-meta list-unstyled d-flex align-items-center m-0"
-                >
-                  <li>
-                    <a
-                      class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                      href="#!"
-                    >
-                      <i class="fa-regular fa-calendar"></i>
-                      <span class="ms-2 fs-7">13 Apr 2028</span>
-                    </a>
-                  </li>
-                  <li>
-                    <span class="px-3">&bull;</span>
-                  </li>
-                  <li>
-                    <a
-                      class="link-secondary text-decoration-none d-flex align-items-center"
-                      href="#!"
-                    >
-                      <i class="fa-regular fa-comment-dots"></i>
-                      <span class="ms-2 fs-7">158</span>
-                    </a>
-                  </li>
-                  <li>
-                    <span class="px-3">&bull;</span>
-                  </li>
-                  <li>
-                    <a
-                      class="link-secondary text-decoration-none d-flex align-items-center"
-                      href="#!"
-                    >
-                      <i class="fa-regular fa-thumbs-up"></i>
-                      <span class="ms-2 fs-7">158</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 d-flex">
-            <img
-              class="img-fluid rounded-end object-fit-cover"
-              loading="lazy"
-              src="{% static 'img/featured/featured-img-1.jpg' %}"
-              alt="Entrepreneurship"
-            />
-          </div>
-        </div>
-      </div>
-    </article>
-  </div> -->
 
   <div class="container">
     <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
@@ -178,9 +91,13 @@
   <section class="bsb-blog-5 py-3 py-md-5 py-xl-8 bsb-section-py-xxl-1">
     <div class="container">
       <div class="row justify-content-md-center">
-        <div class="col-12">
+        <div class="col-3">
           <h2 class="h4 mb-4 mb-md-5">Latest</h2>
         </div>
+        <div class="col-9">
+        <!-- Alert -->
+        {% include 'partials/_alert.html' %}
+      </div>
       </div>
     </div>
     <div class="container overflow-hidden">

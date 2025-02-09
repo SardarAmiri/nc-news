@@ -45,22 +45,40 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto stack-horizontal gap-2">
-        <li 
-        class="nav-item {% if 'register' in request.path %} active {% endif %}"
-        >
-          <a class="nav-link" href="{% url 'register' %}">
-            <i class="fa-solid fa-user-plus"></i>
-            REGISTER</a
+        {% if user.is_authenticated %}
+          <li class="nav-item {% if 'dashboard' in request.path %} active {% endif %}">
+            <a class="nav-link">
+              <!-- href="{% url 'dashboard' %}" -->
+             Welcome {{user.username}}</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}">
+             <i class="fas fa-sign-out-alt"></i> Logout</a
+            >
+            <form action="{% url 'logout' %}" method="POST" id="logout">
+              {% csrf_token %}
+              <input type="hidden" />
+            </form>
+          </li>
+        {% else %}
+          <li 
+          class="nav-item {% if 'register' in request.path %} active {% endif %}"
           >
-        </li>
-        <li 
-        class="nav-item {% if 'login' in request.path %} active {% endif %}"
-        >
-          <a class="nav-link" href="{% url 'login' %}">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            LOGIN</a
+            <a class="nav-link" href="{% url 'register' %}">
+              <i class="fa-solid fa-user-plus"></i>
+              REGISTER</a
+            >
+          </li>
+          <li 
+          class="nav-item {% if 'login' in request.path %} active {% endif %}"
           >
-        </li>
+            <a class="nav-link" href="{% url 'login' %}">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              LOGIN</a
+            >
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>
