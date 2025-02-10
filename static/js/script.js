@@ -2,26 +2,93 @@
   
   document.addEventListener("DOMContentLoaded", function () {
     console.log("Script loaded");
-    document
-      .getElementById("sortSelect")
-      .addEventListener("change", function () {
-        // console.log("Sort select not changed");
-        // const selectedValue = this.value;
-        // console.log("Selected value:", selectedValue);
-        
+    // document
+    //   .getElementById("sortSelect")
+    //   .addEventListener("change", function () {
+    //     // console.log("Sort select not changed");
+    //     // const selectedValue = this.value;
+    //     // console.log("Selected value:", selectedValue);
 
-        // Get base URL from data attribute
-        const baseUrl = this.dataset.baseUrl;
-        const urlParams = new URLSearchParams(window.location.search);
-        // Update parameters
-        urlParams.set("sort", this.value);
-        urlParams.delete("page"); // Reset to first page
+    //     // Get base URL from data attribute
+    //     const baseUrl = this.dataset.baseUrl;
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     // Update parameters
+    //     urlParams.set("sort", this.value);
+    //     urlParams.delete("page"); // Reset to first page
 
-        // Redirect with new parameters
-        window.location.href = `${baseUrl}?${urlParams.toString()}`;
+    //     // Redirect with new parameters
+    //     window.location.href = `${baseUrl}?${urlParams.toString()}`;
+    //   });
+    const sortSelect = document.getElementById("sortSelect");
+    const articlesContainer = document.getElementById("articlesContainer");
+
+    if (!sortSelect || !articlesContainer) return;
+
+    // Main fetch function
+    const fetchArticles = async (url) => {
+      try {
+        // Show loading state
+        articlesContainer.innerHTML =
+          '<div class="text-center">Loading...</div>';
+
+        // Make AJAX request
+        const response = await fetch(url, {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest", // Identify as AJAX request
+          },
+        });
+
+        if (!response.ok) throw new Error("Network response was not ok");
+
+        // Parse JSON response
+        const data = await response.json();
+
+        // Update articles container
+        articlesContainer.innerHTML = data.html;
+
+        // Update browser URL without reload
+        window.history.pushState(null, "", url);
+
+        // Re-attach pagination handlers
+        attachPaginationHandlers();
+      } catch (error) {
+        console.error("Fetch error:", error);
+        articlesContainer.innerHTML =
+          '<div class="alert alert-danger">Error loading articles</div>';
+      }
+    };
+
+    // Handle sorting changes
+    const handleSortChange = () => {
+      const baseUrl = sortSelect.dataset.baseUrl;
+      const url = new URL(baseUrl, window.location.origin);
+
+      // Set query parameters
+      url.searchParams.set("sort", sortSelect.value);
+      url.searchParams.delete("page"); // Reset to first page
+
+      fetchArticles(url.toString());
+    };
+
+    // Handle pagination clicks
+    const handlePaginationClick = (event) => {
+      event.preventDefault();
+      const url = event.target.href;
+      fetchArticles(url);
+    };
+
+    // Attach pagination event listeners
+    const attachPaginationHandlers = () => {
+      document.querySelectorAll(".pagination a").forEach((link) => {
+        link.addEventListener("click", handlePaginationClick);
       });
-    
+    };
+
+    // Initial setup
+    sortSelect.addEventListener("change", handleSortChange);
+    attachPaginationHandlers();
   });
+  
   document
     .getElementById("show-comments")
     .addEventListener("click", function () {

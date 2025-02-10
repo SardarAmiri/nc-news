@@ -15,6 +15,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Topic
 from django.db.models import Count
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 def topic_articles(request, slug):
     topic = get_object_or_404(Topic, slug=slug)
@@ -35,10 +37,14 @@ def topic_articles(request, slug):
     # Add pagination
     paginator = Paginator(articles, 3)
     page_list = paginator.get_page(page_number)
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        html = render_to_string('partials/_articles_list.html', {'articles': page_list, 'current_sort': sort, 'topic': topic})
+        return JsonResponse({'html': html})
     
     context = {
         'topic': topic,
         'articles': page_list,
-        'current_sort': sort  # Pass sort parameter to template
+        'current_sort': sort  
     }
     return render(request, 'topics/topic_articles.html', context)
