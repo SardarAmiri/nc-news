@@ -1,0 +1,121 @@
+{% load static %}
+{% if articles %} 
+{% for article in articles %}
+<div class="col-12 col-lg-4">
+    <article>
+        <div class="card border-1 bg-transparent p-4">
+        <figure
+            class="card-img-top mb-4 overflow-hidden bsb-overlay-hover"
+        >
+            <a href="{% url 'article' article.id %}">
+            <img
+                class="latest-img img-fluid bsb-scale bsb-hover-scale-up"
+                loading="lazy"
+                src="{{ article.article_img.url}}"
+                alt="{{ article.topic }}"
+            />
+            </a>
+        </figure>
+        <div class="card-body m-0 p-0">
+            <div class="entry-header mb-3">
+            <ul class="entry-meta list-unstyled d-flex mb-3">
+                <li>
+                <a
+                    class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7"
+                    href="#!"
+                    >{{ article.topic }}</a
+                >
+                </li>
+            </ul>
+            <h2 class="card-title entry-title h4 m-0">
+                <a class="link-dark text-decoration-none" href="{% url 'article' article.id %}"
+                >{{ article.title}}</a
+                >
+            </h2>
+            </div>
+        </div>
+        <div class="card-footer border-0 bg-transparent p-0 m-0">
+            <ul
+            class="entry-meta list-unstyled d-flex align-items-center m-0"
+            >
+            <li>
+                <a
+                class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
+                href="#"
+                ></a>
+                <i class="fa-regular fa-calendar"></i>
+                <span class="ms-2 fs-7">{{ article.created_at|date:"d M, Y" }}</span>
+            </li>
+            <li>
+                <span class="px-3">&bull;</span>
+            </li>
+            <li>
+                <a
+                class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
+                href="#"
+                ></a>
+                <i class="fa-regular fa-comment-dots"></i>
+                <span class="ms-2 fs-7">{{ article.comment_count}}</span>
+            </li>
+            <li>
+                <span class="px-3">&bull;</span>
+            </li>
+            <li>
+                <a
+                class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
+                href="#"
+                ></a>
+                <i class="fa-regular fa-thumbs-up"></i>
+                <span class="ms-2 fs-7">{{ article.votes}}</span>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </article>
+</div>
+{% endfor %}
+{% else %} 
+<div class="col-12">
+    <div class="alert alert-warning" role="alert">
+    <h4 class="alert-heading">No Articles Found</h4>
+    <p>
+        There are no articles available at the moment. Please check back
+        later.
+    </p>
+    </div>
+</div>
+{% endif %}
+
+{% if articles.has_other_pages %}
+<div class="row mt-5">
+    <div class="col-md-12">
+        <ul class="pagination">
+            {% if articles.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ articles.previous_page_number }}&sort={{ current_sort }}">&laquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">&laquo;</a>
+                </li>
+            {% endif %}
+            
+            {% for num in articles.paginator.page_range %}
+                <li class="page-item {% if articles.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}&sort={{ current_sort }}">{{ num }}</a>
+                </li>
+            {% endfor %}
+            
+            {% if articles.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ articles.next_page_number }}&sort={{ current_sort }}">&raquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">&raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}

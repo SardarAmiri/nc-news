@@ -3,12 +3,15 @@ from django.db.models import Count
 from .models import Article 
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 
 # Create your views here.
 def index(request):
     sort = request.GET.get('sort', 'date')
+    
     articles = Article.objects.annotate(comment_count=Count('comments')).order_by('-created_at')
 
     if sort == 'date':
@@ -19,8 +22,13 @@ def index(request):
         articles = articles.order_by('-votes')
     
     paginator = Paginator(articles, 3)
-    page_number = request.GET.get('page')
+    page_number = request.GET.get('page', 1)
     page_list = paginator.get_page(page_number) 
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        html = render_to_string('partials/_articles_list.html', {'articles': page_list, 'current_sort': sort})
+        return JsonResponse({'html': html})
+
     context = {
         'articles': page_list,
         'current_sort': sort
