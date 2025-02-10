@@ -67,15 +67,8 @@
         <!-- Reactions -->
 
         <!-- Buttons -->
-        <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
-            <div>
-                <button  type="button"  class="btn btn-link btn-lg">
-                    <i class="fas fa-thumbs-up me-2"></i>
-                </button>
-                <button  type="button" class="btn btn-link btn-lg">
-                    <i class="fas fa-thumbs-down me-2"></i>
-                </button>
-            </div>
+        <div class="d-flex justify-content-end text-center border-top border-bottom mb-4">
+            
             <button id="show-comments"  type="button"  class="btn btn-lg" >
              Show Comments
             </button>
@@ -107,13 +100,10 @@
                     <small>{{ comment.body }}</small>
                 </p>
                 <div class="d-flex align-items-center">
-                    <button class="btn-vote btn btn-link btn-sm p-0" data-vote-type="up" data-id="{{ comment.id }}">
+                    <button class="btn-vote btn btn-link btn-sm p-0" data-id="{{ comment.id }}" {% if request.user in comment.voted_by.all %}disabled{% endif %}>
                         <i class="fas fa-thumbs-up"></i>
                     </button>
                     <span class="mx-1" id="comment-votes-{{ comment.id }}">{{ comment.votes }}</span>
-                    <button class="btn-vote btn btn-link btn-sm p-0" data-vote-type="down" data-id="{{ comment.id }}">
-                        <i class="fas fa-thumbs-down"></i>
-                    </button>
                     {% if comment.author == request.user %}
                     <button class="btn-delete-comment btn btn-sm text-danger p-0 ms-2" data-id="{{ comment.id }}">Delete</button>
                     {% endif %}

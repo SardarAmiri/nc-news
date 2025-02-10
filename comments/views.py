@@ -45,10 +45,12 @@ def delete_comment(request, comment_id):
 @login_required
 def vote_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
-    vote_type = request.POST.get('vote_type')
-    if vote_type == 'up':
-        comment.votes += 1
-    elif vote_type == 'down':
-        comment.votes -= 1
+    if request.user in comment.voted_by.all():
+        return JsonResponse({'success': False, 'error': 'You already voted'}, status=400)
+    
+    comment.voted_by.add(request.user)
+    comment.votes += 1
     comment.save()
+
     return JsonResponse({'success': True, 'id': comment_id, 'votes': comment.votes})
+

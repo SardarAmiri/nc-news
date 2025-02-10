@@ -73,58 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
   sortSelect.addEventListener("change", handleSortChange);
   attachPaginationHandlers();
 
-  // Vote Functionality
-
-  // function getCookie(name) {
-  //   let cookieValue = null;
-  //   if (document.cookie && document.cookie !== "") {
-  //     const cookies = document.cookie.split(";");
-  //     for (let i = 0; i < cookies.length; i++) {
-  //       const cookie = cookies[i].trim();
-  //       if (cookie.startsWith(name + "=")) {
-  //         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-  //         break;
-  //       }
-  //     }
-  //   }
-  //   return cookieValue;
-  // }
-
-  // document.addEventListener("click", function (e) {
-  //   console.log("Click event detected"); // Debugging statement
-  //   const heartIcon = e.target.closest("#vote-heart");
-  //   if (!heartIcon) return;
-
-  //   e.preventDefault();
-  //   const voteCount = document.getElementById("article-votes");
-
-  //   fetch('{% url "vote_article" article.id %}', {
-  //     method: "POST",
-  //     headers: {
-  //       "X-CSRFToken": getCookie("csrftoken"),
-  //       "Content-Type": "application/json",
-  //     },
-  //     credentials: "include",
-  //   })
-  //     .then((response) => {
-  //       if (response.status === 403) {
-  //         throw new Error("Please log in to vote.");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       if (data.error) {
-  //         alert(data.error);
-  //       } else {
-  //         voteCount.textContent = data.votes;
-  //         heartIcon.style.pointerEvents = "none";
-  //         heartIcon.style.opacity = "0.5";
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message);
-  //     });
-  // });
+  
 });
 
 document.getElementById("show-comments").addEventListener("click", function () {
@@ -181,11 +130,6 @@ document
                         <i class="fas fa-thumbs-up"></i>
                     </button>
                     <span class="mx-1" id="comment-votes-${data.id}">0</span>
-                    <button class="btn-vote btn btn-link btn-sm p-0" data-vote-type="down" data-id="${
-                      data.id
-                    }">
-                        <i class="fas fa-thumbs-down"></i>
-                    </button>
                     ${
                       data.is_author
                         ? `<button class="btn-delete-comment btn btn-sm text-danger p-0 ms-2" data-id="${data.id}">Delete</button>`
@@ -241,13 +185,12 @@ document.addEventListener("click", function (event) {
     if (!target.classList.contains("btn-vote")) {
       target = target.closest(".btn-vote");
     }
-
+    const button = target.closest(".btn-vote");
     const commentId = target.getAttribute("data-id");
-    const voteType = target.getAttribute("data-vote-type");
-    console.log("Vote commentId:", commentId);
-    console.log("Vote voteType:", voteType);
 
-    if (commentId && voteType) {
+    if (button.disabled) return;
+    
+    if (commentId) {
       fetch(`/comments/${commentId}/vote/`, {
         method: "POST",
         headers: {
@@ -255,19 +198,18 @@ document.addEventListener("click", function (event) {
           "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]")
             .value,
         },
-        body: new URLSearchParams({
-          vote_type: voteType,
-        }),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status === 403) throw new Error("Please log in to vote");
+          return response.json();
+        })
         .then((data) => {
           if (data.success) {
-            const votesElement = document.getElementById(
-              `comment-votes-${data.id}`
-            );
-            votesElement.textContent = data.votes;
+            document.getElementById(`comment-votes-${data.id}`).textContent =
+              data.votes;
+            button.disabled = true;
           } else {
-            alert("Failed to vote.");
+            alert(data.error || "Failed to vote");
           }
         })
         .catch((error) => {
@@ -325,3 +267,9 @@ document.addEventListener("click", function (event) {
       alert(error.message);
     });
 });
+
+
+setTimeout(function () {
+  $("#alert-message").fadeOut("slow");
+
+}, 3000)
