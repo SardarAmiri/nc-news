@@ -55,8 +55,9 @@
         <div class="d-flex justify-content-between mb-3">
             <div>
             
-                <i class="fas fa-heart text-danger"></i>
-                <span>{{article.votes}}</span>
+                
+                <button type="button" id="vote-heart" class="btn btn-vote-article" data-vote-url="{% url 'vote_article' article.id %}"><i class="fas fa-heart text-danger"></i></button>
+                <span id="article-votes">{{article.votes}}</span>
             
             </div>
             <div>

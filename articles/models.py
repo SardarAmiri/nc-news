@@ -8,6 +8,7 @@ class Article(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
     votes = models.IntegerField(default=0)
+    voted_by = models.ManyToManyField(User, related_name='voted_articles', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     article_img = models.ImageField(upload_to='images/%Y/%m/%d/') 
 
