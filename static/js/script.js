@@ -28,8 +28,13 @@
     const fetchArticles = async (url) => {
       try {
         // Show loading state
-        articlesContainer.innerHTML =
-          '<div class="text-center">Loading...</div>';
+        articlesContainer.innerHTML = `
+          <div class="d-flex justify-content-center align-items-center" style="height: 579px;">
+            <div class="spinner-border text-danger" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+         </div>
+          `;
 
         // Make AJAX request
         const response = await fetch(url, {
