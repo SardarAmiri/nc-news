@@ -7,6 +7,7 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comments")
     body = models.TextField()
     votes = models.IntegerField(default=0)
+    voted_by = models.ManyToManyField(User, related_name='voted_comments', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
