@@ -23,7 +23,7 @@ def index(request):
     elif sort == 'votes':
         articles = articles.order_by('-votes')
     
-    paginator = Paginator(articles, 3)
+    paginator = Paginator(articles, 6)
     page_number = request.GET.get('page', 1)
     page_list = paginator.get_page(page_number) 
 
