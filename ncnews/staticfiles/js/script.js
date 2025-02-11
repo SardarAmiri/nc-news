@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 document.addEventListener("DOMContentLoaded", function () {
   // Alert message
   // Select all alert elements
@@ -13,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   });
 
-  
   const sortSelect = document.getElementById("sortSelect");
   const articlesContainer = document.getElementById("articlesContainer");
 
@@ -159,7 +160,6 @@ document
           // Update comment count
           const commentCountSpan = document.getElementById("comment-count");
           commentCountSpan.textContent = `${data.comment_count} comments`;
-
         } else {
           alert("Failed to add comment.");
         }
@@ -167,7 +167,8 @@ document
       .catch((error) => {
         console.error("Error:", error);
         alert("An error occurred while adding the comment.");
-      }).finally(() => {
+      })
+      .finally(() => {
         // Reset button state
         submitButton.innerHTML = "Add Comment";
         submitButton.disabled = false;
@@ -178,9 +179,8 @@ document.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-delete-comment")) {
     const deleteButton = event.target;
     const originalButtonHTML = deleteButton.innerHTML;
-    
 
-     deleteButton.innerHTML = `
+    deleteButton.innerHTML = `
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Deleting...
     `;
@@ -208,8 +208,8 @@ document.addEventListener("click", function (event) {
           commentCountSpan.textContent = `${data.comment_count} comments`;
         } else {
           alert("Failed to delete comment.");
-           deleteButton.innerHTML = originalButtonHTML;
-           deleteButton.disabled = false;
+          deleteButton.innerHTML = originalButtonHTML;
+          deleteButton.disabled = false;
         }
       })
       .catch((error) => {
@@ -231,7 +231,7 @@ document.addEventListener("click", function (event) {
     const commentId = target.getAttribute("data-id");
 
     if (button.disabled) return;
-    
+
     if (commentId) {
       fetch(`/comments/${commentId}/vote/`, {
         method: "POST",
@@ -274,7 +274,6 @@ document.addEventListener("click", function (event) {
     }
     return cookieValue;
   }
-
 
   const heartIcon = event.target.closest("#vote-heart");
   if (!heartIcon) return;
