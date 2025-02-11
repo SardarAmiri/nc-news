@@ -1,4 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Alert message
+  // Select all alert elements
+  const alerts = document.querySelectorAll("#alert-message");
+
+  alerts.forEach((alert) => {
+    // Create Bootstrap Alert instance
+    const bsAlert = new bootstrap.Alert(alert);
+
+    // Close alert after 3000ms (3 seconds)
+    setTimeout(() => {
+      bsAlert.close();
+    }, 3000);
+  });
+
   const sortSelect = document.getElementById("sortSelect");
   const articlesContainer = document.getElementById("articlesContainer");
 
@@ -72,8 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial setup
   sortSelect.addEventListener("change", handleSortChange);
   attachPaginationHandlers();
-
-  
 });
 
 document.getElementById("show-comments").addEventListener("click", function () {
@@ -91,8 +103,13 @@ document
   .getElementById("comment-form")
   .addEventListener("submit", function (e) {
     e.preventDefault();
-    const formData = new FormData(this);
-    console.log("Form data:", formData);
+    const form = this;
+    const formData = new FormData(form);
+    const submitButton = form.querySelector('button[type="submit"]');
+    // Show loader and disable button
+    submitButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Adding...`;
+    submitButton.disabled = true;
     fetch(this.action, {
       method: "POST",
       body: formData,
@@ -104,7 +121,6 @@ document
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         if (data.success) {
           // Clear the form
           document.getElementById("comment-body").value = "";
@@ -138,6 +154,11 @@ document
                 </div>
             `;
           document.getElementById("comment-section").prepend(commentDiv);
+
+          // Update comment count
+          const commentCountSpan = document.getElementById("comment-count");
+          commentCountSpan.textContent = `${data.comment_count} comments`;
+
         } else {
           alert("Failed to add comment.");
         }
@@ -145,12 +166,25 @@ document
       .catch((error) => {
         console.error("Error:", error);
         alert("An error occurred while adding the comment.");
+      }).finally(() => {
+        // Reset button state
+        submitButton.innerHTML = "Add Comment";
+        submitButton.disabled = false;
       });
   });
 
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-delete-comment")) {
-    console.log("Deleting...");
+    const deleteButton = event.target;
+    const originalButtonHTML = deleteButton.innerHTML;
+    
+
+     deleteButton.innerHTML = `
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Deleting...
+    `;
+    deleteButton.disabled = true;
+
     const commentId = event.target.getAttribute("data-id");
     fetch(`/comments/${commentId}/delete/`, {
       method: "POST",
@@ -167,12 +201,20 @@ document.addEventListener("click", function (event) {
             `[data-comment-id="${data.id}"]`
           );
           commentElement.remove();
+
+          // Update comment count
+          const commentCountSpan = document.getElementById("comment-count");
+          commentCountSpan.textContent = `${data.comment_count} comments`;
         } else {
           alert("Failed to delete comment.");
+           deleteButton.innerHTML = originalButtonHTML;
+           deleteButton.disabled = false;
         }
       })
       .catch((error) => {
         console.error("Error:", error);
+        deleteButton.innerHTML = originalButtonHTML;
+        deleteButton.disabled = false;
       });
   }
 
@@ -268,8 +310,3 @@ document.addEventListener("click", function (event) {
     });
 });
 
-
-setTimeout(function () {
-  $("#alert-message").fadeOut("slow");
-
-}, 3000)

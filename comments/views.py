@@ -28,7 +28,8 @@ def add_comment(request, article_id):
             'created_at': comment.created_at.strftime("%d %b, %Y"),
             'votes': comment.votes,
             'id': comment.id,
-            'is_author': True
+            'is_author': True,
+            'comment_count': article.comments.count() 
         })
     return JsonResponse({'success': False, 'error': 'Empty comment'})
 
@@ -38,7 +39,7 @@ def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if comment.author == request.user:
         comment.delete()
-        return JsonResponse({'success': True, 'id': comment_id})
+        return JsonResponse({'success': True, 'id': comment_id, 'comment_count': comment.article.comments.count()})
     return JsonResponse({'success': False, 'error': 'Unauthorized'}, status=403)
 
 @require_POST

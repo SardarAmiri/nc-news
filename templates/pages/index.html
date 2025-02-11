@@ -4,14 +4,18 @@
   <!-- Hero Section -->
   <div class="container">
     <div class="row justify-content-md-center">
-      <div class="col-12">
+      <div class="col-3">
         <h2 class="h4 mb-4 mb-md-5">Featured</h2>
+      </div>
+      <div class="col-9">
+        <!-- Alert -->
+        {% include 'partials/_alert.html' %}
       </div>
     </div>
   </div>
 
   <div class="container">
-    <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <div id="featuredCarousel" class="slide" data-bs-ride="carousel" data-bs-interval="5000">
       <!-- Carousel Indicators -->
       <div class="carousel-indicators">
         {% for article in articles|slice:":3" %}
@@ -24,12 +28,12 @@
           <article>
             <div class="card border-light-subtle">
               <div class="row g-0">
-                <div class="col-12 col-md-6 order-1 order-md-0 d-flex align-items-center p-4">
+                <div class="col-12 col-md-6 order-1 order-md-0 d-flex align-items-center">
                   <div class="card-body p-md-4 p-xl-6 p-xxl-9">
                     <div class="entry-header mb-3">
                       <ul class="entry-meta list-unstyled d-flex mb-4">
                         <li>
-                          <a class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7" href="#!">{{ article.topic }}</a>
+                          <a class="d-inline-flex px-2 py-1 link-accent text-accent-emphasis bg-accent-subtle border border-accent-subtle rounded-2 text-decoration-none fs-7">{{ article.topic }}</a>
                         </li>
                       </ul>
                       <h2 class="card-title entry-title display-3 fw-bold mb-4 lh-1">
@@ -40,7 +44,7 @@
                     <div class="entry-footer">
                       <ul class="entry-meta list-unstyled d-flex align-items-center m-0">
                         <li>
-                          <a class="fs-7 link-secondary text-decoration-none d-flex align-items-center" href="#!">
+                          <a class="fs-7 link-secondary text-decoration-none d-flex align-items-center">
                             <i class="fa-regular fa-calendar"></i>
                             <span class="ms-2 fs-7">{{ article.created_at|date:"d M, Y" }}</span>
                           </a>
@@ -49,7 +53,7 @@
                           <span class="px-3">&bull;</span>
                         </li>
                         <li>
-                          <a class="link-secondary text-decoration-none d-flex align-items-center" href="#!">
+                          <a class="link-secondary text-decoration-none d-flex align-items-center" >
                             <i class="fa-regular fa-comment-dots"></i>
                             <span class="ms-2 fs-7">{{ article.comment_count }}</span>
                           </a>
@@ -58,7 +62,7 @@
                           <span class="px-3">&bull;</span>
                         </li>
                         <li>
-                          <a class="link-secondary text-decoration-none d-flex align-items-center" href="#!">
+                          <a class="link-secondary text-decoration-none d-flex align-items-center">
                             <i class="fa-regular fa-thumbs-up"></i>
                             <span class="ms-2 fs-7">{{ article.votes }}</span>
                           </a>
@@ -91,13 +95,10 @@
   <section class="bsb-blog-5 py-3 py-md-5 py-xl-8 bsb-section-py-xxl-1">
     <div class="container">
       <div class="row justify-content-md-center">
-        <div class="col-3">
+        <div class="col-12">
           <h2 class="h4 mb-4 mb-md-5">Latest</h2>
         </div>
-        <div class="col-9">
-        <!-- Alert -->
-        {% include 'partials/_alert.html' %}
-      </div>
+        
       </div>
     </div>
     <div class="container overflow-hidden">
@@ -142,10 +143,7 @@
                         class="entry-meta list-unstyled d-flex align-items-center m-0"
                       >
                         <li>
-                          <a
-                            class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                            href="#"
-                          ></a>
+
                           <i class="fa-regular fa-calendar"></i>
                           <span class="ms-2 fs-7">{{ article.created_at|date:"d M, Y" }}</span>
                         </li>
@@ -153,10 +151,7 @@
                           <span class="px-3">&bull;</span>
                         </li>
                         <li>
-                          <a
-                            class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                            href="#"
-                          ></a>
+                          
                           <i class="fa-regular fa-comment-dots"></i>
                           <span class="ms-2 fs-7">{{ article.comment_count}}</span>
                         </li>
@@ -164,10 +159,7 @@
                           <span class="px-3">&bull;</span>
                         </li>
                         <li>
-                          <a
-                            class="fs-7 link-secondary text-decoration-none d-flex align-items-center"
-                            href="#"
-                          ></a>
+                          
                           <i class="fa-regular fa-thumbs-up"></i>
                           <span class="ms-2 fs-7">{{ article.votes}}</span>
                         </li>
@@ -193,12 +185,12 @@
       </div>
     </div>
     <!-- View All Articles -->
-    <div class="container">
+    <div class="container mt-5">
       <div class="row">
         <div class="col text-center">
           <a
             href="{% url 'articles' %}"
-            class="btn bsb-btn-2xl btn-primary rounded-pill mt-5 mt-xl-10"
+            class="all-articles"
             >All Articles</a
           >
         </div>
