@@ -57,7 +57,7 @@
             
                 
                 <button type="button" id="vote-heart" class="btn btn-vote-article" data-vote-url="{% url 'vote_article' article.id %}"><i class="fas fa-heart text-danger"></i></button>
-                <span id="article-votes">{{article.votes}}</span>
+                <span id="article-votes">{{article.votes}}</span> <p id="already-voted" class="text-danger ms-2"></p>
             
             </div>
             <div>

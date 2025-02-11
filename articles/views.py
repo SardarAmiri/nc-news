@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 
 
 
@@ -39,6 +40,9 @@ def index(request):
 
 @login_required
 def article(request, article_id):
+    if not request.user.is_authenticated:
+        messages.error(request, 'You need to login to view the article.')
+        return redirect('login')
     article = get_object_or_404(Article.objects.annotate(comment_count=Count('comments')), pk=article_id)
     context = {'article': article}
     return render(request, 'articles/article.html', context)

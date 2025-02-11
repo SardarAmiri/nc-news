@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   });
 
+  
   const sortSelect = document.getElementById("sortSelect");
   const articlesContainer = document.getElementById("articlesContainer");
 
@@ -222,7 +223,6 @@ document.addEventListener("click", function (event) {
     event.target.classList.contains("btn-vote") ||
     event.target.closest(".btn-vote")
   ) {
-    console.log("Vote button clicked");
     let target = event.target;
     if (!target.classList.contains("btn-vote")) {
       target = target.closest(".btn-vote");
@@ -280,7 +280,7 @@ document.addEventListener("click", function (event) {
   if (!heartIcon) return;
   event.preventDefault();
   const voteCount = document.getElementById("article-votes");
-  console.log("Vote button clicked");
+  const alreadyVoted = document.getElementById("already-voted");
   fetch(heartIcon.dataset.voteUrl, {
     // Use data-attribute for URL
     method: "POST",
@@ -298,7 +298,8 @@ document.addEventListener("click", function (event) {
     })
     .then((data) => {
       if (data.error) {
-        alert(data.error);
+        // alert(data.error);
+        alreadyVoted.innerText = data.error;
       } else {
         voteCount.textContent = data.votes;
         heartIcon.style.pointerEvents = "none";
@@ -309,4 +310,3 @@ document.addEventListener("click", function (event) {
       alert(error.message);
     });
 });
-

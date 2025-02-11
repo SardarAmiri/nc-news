@@ -78,14 +78,15 @@ a.all-articles{
    padding:0.35em 1.2em; 
    border:0.1em solid #000000; 
    margin:0 0.3em 0.3em 0; 
-   border-radius:0.12em; 
+   border-radius: 10px; 
    box-sizing: border-box; 
    text-decoration:none; 
    font-family:'Roboto',sans-serif; 
-   font-weight:300; 
-   color:#000000; 
+   color:#FFFFFF; 
    text-align:center; 
    transition: all 0.2s;
+   background-color:#000000;
+   font-weight: bold;
 }
 a.all-articles:hover{
   color:#FFFFFF; 
