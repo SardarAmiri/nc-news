@@ -17,11 +17,11 @@
   <div class="container">
     <div id="featuredCarousel" class="slide" data-bs-ride="carousel" data-bs-interval="5000">
       <!-- Carousel Indicators -->
-      <div class="carousel-indicators">
+      <!-- <div class="carousel-indicators">
         {% for article in articles|slice:":3" %}
         <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
         {% endfor %}
-      </div>
+      </div> -->
       <div class="carousel-inner">
         {% for article in articles|slice:":3" %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
